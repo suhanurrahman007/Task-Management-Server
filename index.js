@@ -49,7 +49,30 @@ async function run() {
             res.send(result)
         })
 
-    
+        app.put('/tasks/:id', async (req, res) => {
+            const id = req.params.id;
+            const task = req.body
+            // console.log(task);
+
+            const filter = {
+                _id: new ObjectId(id)
+            };
+
+
+            const updatedDoc = {
+                $set: {
+                    title: task.title,
+                    description: task.description,
+                    priority: task.priority,
+                    deadlines: task.deadlines
+                }
+            }
+            const result = await tasksCollection.updateOne(filter, updatedDoc);
+            res.send(result);
+        })
+
+        
+
         
 
         // Send a ping to confirm a successful connection

@@ -37,7 +37,19 @@ async function run() {
             res.send(result)
         });
 
+        app.get("/tasksCount", async(req, res) =>{
+            const count = await tasksCollection.estimatedDocumentCount()
+            res.send({count})
+        })
 
+        app.post("/tasks", async (req, res) => {
+            const task = req.body
+            // console.log(task);
+            const result = await tasksCollection.insertOne(task)
+            res.send(result)
+        })
+
+    
         
 
         // Send a ping to confirm a successful connection
